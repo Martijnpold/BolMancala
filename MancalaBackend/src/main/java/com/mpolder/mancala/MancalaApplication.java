@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MancalaBackendApplication {
+public class MancalaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MancalaBackendApplication.class, args);
+		SpringApplication.run(MancalaApplication.class, args);
 	}
 
 }
