@@ -1,8 +1,13 @@
 package com.mpolder.mancala.model;
 
-import java.util.UUID;
+import com.mpolder.mancala.model.idclass.PlayerId;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import lombok.Data;
 
+@Data
+@Entity
 public class Player {
-    private UUID gameId;
-    private Side side;
+    @EmbeddedId
+    private PlayerId id;
 }
