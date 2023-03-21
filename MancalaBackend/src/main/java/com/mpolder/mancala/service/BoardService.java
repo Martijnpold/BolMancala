@@ -49,7 +49,7 @@ public class BoardService implements IBoardService {
         scorePit.addMarbles(tally);
         pit.clearMarbles();
         oppositePit.clearMarbles();
-        pitRepository.saveAll(Arrays.asList(pit, scorePit, oppositePit));
+        pitRepository.saveAll(Arrays.asList(pit, oppositePit, scorePit));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class BoardService implements IBoardService {
 
     @Override
     public Side getScorePitSide(Pit pit) {
-        if (pit.getId().getPitIndex() % 7 != 0) return null;
+        if ((pit.getId().getPitIndex() + 1) % 7 != 0) return null;
         return getPitSide(pit);
     }
 

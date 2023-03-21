@@ -22,8 +22,7 @@ public interface IGameService {
     /**
      * Returns whether a turn should be ended after playing the last marble
      *
-     * @param player Player that played the turn
      * @param pit    Pit the last marble landed in
      */
-    boolean shouldEndTurn(Player player, Pit pit);
+    boolean shouldEndTurn(Pit pit);
 }

@@ -21,7 +21,7 @@ public class Board {
     public static Board build(UUID gameId) {
         Pit[] pits = new Pit[14];
         for (int i = 0; i < pits.length; i++) {
-            int marbles = i % 7 == 0 ? 0 : 6;
+            int marbles = (i + 1) % 7 == 0 ? 0 : 6;
             pits[i] = new Pit(new PitId(gameId, i), marbles);
         }
         return new Board(gameId, pits);

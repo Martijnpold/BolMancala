@@ -45,7 +45,7 @@ public class GameService implements IGameService {
             if (!boardService.isScorePit(pit) && end.getMarbles() == 1) {
                 boardService.collectOpposites(player, board, pit);
             }
-            if (shouldEndTurn(player, end)) {
+            if (shouldEndTurn(end)) {
                 game.setTurn(player.getSide().opponent());
                 gameRepository.save(game);
             }
@@ -57,11 +57,13 @@ public class GameService implements IGameService {
         Side side = player.getSide();
         boolean valid = side.equals(game.getTurn());
         valid &= side.equals(boardService.getPitSide(pit));
+        valid &= !boardService.isScorePit(pit);
+        valid &= pit.getMarbles() > 0;
         return valid;
     }
 
     @Override
-    public boolean shouldEndTurn(Player player, Pit pit) {
+    public boolean shouldEndTurn(Pit pit) {
         return !boardService.isScorePit(pit);
     }
 }
