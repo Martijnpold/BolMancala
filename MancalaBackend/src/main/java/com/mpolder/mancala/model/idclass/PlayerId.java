@@ -9,6 +9,6 @@ import java.util.UUID;
 @Data
 @Embeddable
 public class PlayerId {
-    private UUID gameId;
-    private Side side;
+    private final UUID gameId;
+    private final Side side;
 }

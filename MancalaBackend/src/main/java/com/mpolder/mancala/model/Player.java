@@ -10,4 +10,12 @@ import lombok.Data;
 public class Player {
     @EmbeddedId
     private PlayerId id;
+
+    public Player(PlayerId id) {
+        this.id = id;
+    }
+
+    public Side getSide() {
+        return id.getSide();
+    }
 }

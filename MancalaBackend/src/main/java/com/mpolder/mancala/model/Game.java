@@ -13,4 +13,10 @@ public class Game {
     private UUID id;
     private Side turn;
     private Side winner;
+
+    public Game(UUID id, Side turn, Side winner) {
+        this.id = id;
+        this.turn = turn;
+        this.winner = winner;
+    }
 }

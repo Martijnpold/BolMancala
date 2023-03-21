@@ -8,6 +8,11 @@ import java.util.UUID;
 @Data
 @Embeddable
 public class PitId {
-    private UUID gameId;
-    private int index;
+    private final UUID gameId;
+    private final int index;
+
+    public PitId(UUID gameId, int index) {
+        this.gameId = gameId;
+        this.index = index;
+    }
 }

@@ -11,4 +11,17 @@ public class Pit {
     @EmbeddedId
     private PitId id;
     private int marbles;
+
+    public Pit(PitId id, int marbles) {
+        this.id = id;
+        this.marbles = marbles;
+    }
+
+    public void addMarbles(int amount) {
+        marbles += amount;
+    }
+
+    public void clearMarbles() {
+        marbles = 0;
+    }
 }
