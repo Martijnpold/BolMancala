@@ -11,6 +11,9 @@ public class Player {
     @EmbeddedId
     private PlayerId id;
 
+    public Player() {
+    }
+
     public Player(PlayerId id) {
         this.id = id;
     }

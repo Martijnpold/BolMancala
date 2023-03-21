@@ -12,6 +12,9 @@ public class Pit {
     private PitId id;
     private int marbles;
 
+    public Pit() {
+    }
+
     public Pit(PitId id, int marbles) {
         this.id = id;
         this.marbles = marbles;

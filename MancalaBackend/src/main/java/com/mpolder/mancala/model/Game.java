@@ -1,5 +1,6 @@
 package com.mpolder.mancala.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -10,13 +11,12 @@ import java.util.UUID;
 @Entity
 public class Game {
     @Id
-    private UUID id;
-    private Side turn;
-    private Side winner;
+    private UUID id = UUID.randomUUID();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Side turn = Side.TOP;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Side winner = null;
 
-    public Game(UUID id, Side turn, Side winner) {
-        this.id = id;
-        this.turn = turn;
-        this.winner = winner;
+    public Game() {
     }
 }

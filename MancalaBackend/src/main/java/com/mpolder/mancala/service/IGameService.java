@@ -5,10 +5,15 @@ import com.mpolder.mancala.model.Game;
 import com.mpolder.mancala.model.Pit;
 import com.mpolder.mancala.model.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface IGameService {
+    List<Game> getGames();
+
     Game getGame(UUID id);
+
+    Game initGame();
 
     void tryDoTurn(Game game, Player player, Board board, Pit pit);
 

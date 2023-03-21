@@ -10,6 +10,9 @@ public class Board {
     private UUID gameId;
     private Pit[] pits;
 
+    public Board() {
+    }
+
     public Board(UUID gameId, Pit[] pits) {
         this.gameId = gameId;
         this.pits = pits;
