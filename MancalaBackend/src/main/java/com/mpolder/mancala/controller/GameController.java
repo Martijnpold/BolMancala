@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/api/games")
 public class GameController {
     @Autowired
     private IGameService gameService;
