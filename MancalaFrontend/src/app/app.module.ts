@@ -3,18 +3,31 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToolbarComponent } from './core/toolbar/toolbar.component';
+import { HomePageComponent } from './page/home-page/home-page.component';
+import { AppMaterialModule } from './app-material.module';
+import { PlaceholderCardComponent } from './core/placeholder-card/placeholder-card.component';
+import { CatService } from './service/cat.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToolbarComponent,
+    PlaceholderCardComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    NoopAnimationsModule
+    AppMaterialModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    CatService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
