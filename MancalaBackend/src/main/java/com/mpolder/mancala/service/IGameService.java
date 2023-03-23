@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface IGameService {
     List<Game> getGames();
 
+    List<Game> getGames(User user);
+
     Game getGame(UUID id);
 
     Game initGame(Invite invite);

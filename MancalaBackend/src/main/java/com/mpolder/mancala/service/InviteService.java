@@ -7,9 +7,11 @@ import com.mpolder.mancala.model.User;
 import com.mpolder.mancala.model.idclass.InviteId;
 import com.mpolder.mancala.repository.InviteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class InviteService implements IInviteService {
     @Autowired
     private InviteRepository inviteRepository;
@@ -25,6 +27,11 @@ public class InviteService implements IInviteService {
     @Override
     public List<Invite> getOutgoingInvites(User user) {
         return inviteRepository.findAllByIdInviter(user.getEmail());
+    }
+
+    @Override
+    public Invite createInvite(User inviter, User invitee) {
+        return inviteRepository.save(new Invite(inviter, invitee));
     }
 
     @Override

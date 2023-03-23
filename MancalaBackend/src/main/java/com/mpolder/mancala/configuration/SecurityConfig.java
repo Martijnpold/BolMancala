@@ -16,7 +16,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> {
-                    auth.anyRequest().authenticated();
+                    auth
+                            .requestMatchers(
+                                    "/login",
+                                    "/error"
+                            ).permitAll()
+                            .anyRequest().authenticated();
                 })
                 .oauth2Login()
                 .userInfoEndpoint().oidcUserService(oidcUserService);

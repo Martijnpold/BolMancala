@@ -25,6 +25,11 @@ public class GameService implements IGameService {
     }
 
     @Override
+    public List<Game> getGames(User user) {
+        return gameRepository.findAllPlayerGames(user.getEmail());
+    }
+
+    @Override
     public Game getGame(UUID id) throws NoSuchElementException {
         return gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
     }

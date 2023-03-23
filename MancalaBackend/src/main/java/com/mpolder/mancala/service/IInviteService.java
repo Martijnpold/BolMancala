@@ -11,6 +11,8 @@ public interface IInviteService {
 
     List<Invite> getOutgoingInvites(User user);
 
+    Invite createInvite(User inviter, User invitee);
+
     Invite getInvite(User inviter, User invitee);
 
     Game acceptInvite(Invite invite);
