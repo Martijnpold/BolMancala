@@ -1,8 +1,7 @@
 package com.mpolder.mancala.model;
 
 import com.mpolder.mancala.model.idclass.PlayerId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -10,14 +9,16 @@ import lombok.Data;
 public class Player {
     @EmbeddedId
     private PlayerId id;
-    private String userEmail;
+    @ManyToOne
+    @JoinColumn(name = "user", nullable = false)
+    private User user;
 
     public Player() {
     }
 
-    public Player(Game game, Side side, String userEmail) {
-        this.id = new PlayerId(game.getId(), side);
-        this.userEmail = userEmail;
+    public Player(Game game, Side side, User user) {
+        this.id = new PlayerId(game, side);
+        this.user = user;
     }
 
     public Side getSide() {

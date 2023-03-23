@@ -29,13 +29,13 @@ public class InviteService implements IInviteService {
 
     @Override
     public Invite getInvite(User inviter, User invitee) {
-        return inviteRepository.findById(new InviteId(inviter.getEmail(), invitee.getEmail())).orElseThrow(() -> new ResourceNotFoundException("Invite not found"));
+        return inviteRepository.findById(new InviteId(inviter, invitee)).orElseThrow(() -> new ResourceNotFoundException("Invite not found"));
     }
 
     @Override
     public Game acceptInvite(Invite invite) {
         removeInvite(invite);
-        return gameService.initGame();
+        return gameService.initGame(invite);
     }
 
     @Override

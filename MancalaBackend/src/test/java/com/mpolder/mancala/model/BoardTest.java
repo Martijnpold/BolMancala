@@ -3,7 +3,6 @@ package com.mpolder.mancala.model;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BoardTest {
     @Test
     public void shouldInitialiseBoard() {
-        UUID game = UUID.randomUUID();
+        Game game = new Game();
         Board board = Board.build(game);
 
         int[] expectedMarbles = {
@@ -21,7 +20,7 @@ public class BoardTest {
                 0, //Bottom score
         };
 
-        assertEquals(game, board.getGameId());
+        assertEquals(game, board.getGame());
         assertArrayEquals(expectedMarbles, Arrays.stream(board.getPits()).mapToInt(Pit::getMarbles).toArray());
     }
 }

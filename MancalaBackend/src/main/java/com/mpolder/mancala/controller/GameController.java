@@ -23,9 +23,4 @@ public class GameController {
     public Game getGame(@PathVariable UUID id) {
         return gameService.getGame(id);
     }
-
-    @PutMapping("/create")
-    public Game createGame() {
-        return gameService.initGame();
-    }
 }

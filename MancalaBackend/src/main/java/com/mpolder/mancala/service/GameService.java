@@ -30,11 +30,11 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public Game initGame() {
+    public Game initGame(Invite invite) {
         Game game = new Game();
         gameRepository.save(game);
         boardService.initBoard(game);
-        playerService.initPlayers(game);
+        playerService.initPlayers(game, invite);
         return game;
     }
 

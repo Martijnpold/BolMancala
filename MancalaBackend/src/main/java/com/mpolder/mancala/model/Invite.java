@@ -1,6 +1,7 @@
 package com.mpolder.mancala.model;
 
 
+import com.mpolder.mancala.model.idclass.InviteId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -9,13 +10,17 @@ import lombok.Data;
 @Entity
 public class Invite {
     @EmbeddedId
-    private Invite id;
+    private InviteId id;
 
-    public String getInviter() {
+    public Invite(User inviter, User invitee) {
+        this.id = new InviteId(inviter, invitee);
+    }
+
+    public User getInviter() {
         return id.getInviter();
     }
 
-    public String getInvitee() {
+    public User getInvitee() {
         return id.getInvitee();
     }
 }

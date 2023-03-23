@@ -54,7 +54,7 @@ public class BoardService implements IBoardService {
 
     @Override
     public Board initBoard(Game game) {
-        Board board = Board.build(game.getId());
+        Board board = Board.build(game);
         pitRepository.saveAll(Arrays.asList(board.getPits()));
         return board;
     }
@@ -64,7 +64,7 @@ public class BoardService implements IBoardService {
         var pits = pitRepository.findAllByIdGameId(game.getId()).stream()
                 .sorted(Comparator.comparing(pit -> pit.getId().getPitIndex()))
                 .toArray(Pit[]::new);
-        return new Board(game.getId(), pits);
+        return new Board(game, pits);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.mpolder.mancala.service;
 
 import com.mpolder.mancala.model.*;
 import com.mpolder.mancala.model.idclass.PitId;
-import com.mpolder.mancala.model.idclass.PlayerId;
 import com.mpolder.mancala.repository.PitRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +24,8 @@ public class BoardServiceTest {
     @Test
     public void assertExecuteMoveMovesMarbles() {
         Game game = new Game();
-        Player player = new Player(game, Side.TOP, "testmail");
-        Board board = Board.build(game.getId());
+        Player player = new Player(game, Side.TOP, new User("test@gmail.com", "test"));
+        Board board = Board.build(game);
         Arrays.stream(board.getPits()).forEach(Pit::clearMarbles);
 
         int[] marbles = {
@@ -61,8 +60,8 @@ public class BoardServiceTest {
     @Test
     public void assertExecuteMoveSkipsOpponent() {
         Game game = new Game();
-        Player player = new Player(game, Side.BOTTOM, "testmail");
-        Board board = Board.build(game.getId());
+        Player player = new Player(game, Side.BOTTOM, new User("test@gmail.com", "test"));
+        Board board = Board.build(game);
         Arrays.stream(board.getPits()).forEach(Pit::clearMarbles);
 
         int[] marbles = {
@@ -97,8 +96,8 @@ public class BoardServiceTest {
     @Test
     public void assertCollectOppositesMovesMarbles() {
         Game game = new Game();
-        Player player = new Player(game, Side.TOP, "testmail");
-        Board board = Board.build(game.getId());
+        Player player = new Player(game, Side.TOP, new User("test@gmail.com", "test"));
+        Board board = Board.build(game);
         Pit pit = board.getPits()[2];
         Pit opposite = board.getPits()[10];
         Pit scorePit = board.getPits()[6];
@@ -121,13 +120,13 @@ public class BoardServiceTest {
         Board board = boardService.initBoard(game);
 
         verify(mockPitRepository, times(1)).saveAll(Arrays.asList(board.getPits()));
-        assertEquals(game.getId(), board.getGameId());
+        assertEquals(game, board.getGame());
     }
 
     @Test
     public void assertGetBoardGetsOrderedFromRepository() {
         Game game = new Game();
-        Board board = Board.build(game.getId());
+        Board board = Board.build(game);
         List<Pit> shuffled = new ArrayList<>(Arrays.asList(board.getPits()));
         Collections.shuffle(shuffled);
 
@@ -140,7 +139,7 @@ public class BoardServiceTest {
 
     @Test
     public void assertGetScorePitIsCorrect() {
-        Board board = Board.build(UUID.randomUUID());
+        Board board = Board.build(new Game());
 
         Pit top = boardService.getScorePit(board, Side.TOP);
         Pit bottom = boardService.getScorePit(board, Side.BOTTOM);
@@ -151,20 +150,20 @@ public class BoardServiceTest {
 
     @Test
     public void assertIsScorePitShouldBeFalseForNonScorePits() {
-        UUID gameId = UUID.randomUUID();
+        Game game = new Game();
         List<Pit> regularPits = Arrays.asList(
-                new Pit(new PitId(gameId, 0), 1),
-                new Pit(new PitId(gameId, 1), 1),
-                new Pit(new PitId(gameId, 2), 1),
-                new Pit(new PitId(gameId, 3), 1),
-                new Pit(new PitId(gameId, 4), 1),
-                new Pit(new PitId(gameId, 5), 1),
-                new Pit(new PitId(gameId, 7), 1),
-                new Pit(new PitId(gameId, 8), 1),
-                new Pit(new PitId(gameId, 9), 1),
-                new Pit(new PitId(gameId, 10), 1),
-                new Pit(new PitId(gameId, 11), 1),
-                new Pit(new PitId(gameId, 12), 1)
+                new Pit(game, 0, 1),
+                new Pit(game, 1, 1),
+                new Pit(game, 2, 1),
+                new Pit(game, 3, 1),
+                new Pit(game, 4, 1),
+                new Pit(game, 5, 1),
+                new Pit(game, 7, 1),
+                new Pit(game, 8, 1),
+                new Pit(game, 9, 1),
+                new Pit(game, 10, 1),
+                new Pit(game, 11, 1),
+                new Pit(game, 12, 1)
         );
 
         regularPits.forEach(pit -> {
@@ -174,10 +173,10 @@ public class BoardServiceTest {
 
     @Test
     public void assertIsScorePitShouldBeTrueForScorePits() {
-        UUID gameId = UUID.randomUUID();
+        Game game = new Game();
         List<Pit> regularPits = Arrays.asList(
-                new Pit(new PitId(gameId, 6), 1),
-                new Pit(new PitId(gameId, 13), 1)
+                new Pit(game, 6, 1),
+                new Pit(game, 13, 1)
         );
 
         regularPits.forEach(pit -> {
@@ -187,7 +186,7 @@ public class BoardServiceTest {
 
     @Test
     public void assertGetTopOppositePitToBeCorrect() {
-        Board board = Board.build(UUID.randomUUID());
+        Board board = Board.build(new Game());
         Pit pit1 = board.getPits()[2];
         Pit pit2 = board.getPits()[5];
 
@@ -200,7 +199,7 @@ public class BoardServiceTest {
 
     @Test
     public void assertGetBottomOppositePitToBeCorrect() {
-        Board board = Board.build(UUID.randomUUID());
+        Board board = Board.build(new Game());
         Pit pit1 = board.getPits()[9];
         Pit pit2 = board.getPits()[12];
 

@@ -1,6 +1,7 @@
 package com.mpolder.mancala.model;
 
 import com.mpolder.mancala.model.idclass.PitId;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -10,13 +11,14 @@ import lombok.Data;
 public class Pit {
     @EmbeddedId
     private PitId id;
+    @Column(nullable = false)
     private int marbles;
 
     public Pit() {
     }
 
-    public Pit(PitId id, int marbles) {
-        this.id = id;
+    public Pit(Game game, int index, int marbles) {
+        this.id = new PitId(game, index);
         this.marbles = marbles;
     }
 

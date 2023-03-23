@@ -1,21 +1,26 @@
 package com.mpolder.mancala.model.idclass;
 
+import com.mpolder.mancala.model.Game;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 @Embeddable
 public class PitId {
-    private UUID gameId;
+    @ManyToOne
+    @JoinColumn(name = "gameId")
+    private Game game;
+    @Column(nullable = false)
     private int pitIndex;
 
     public PitId() {
     }
 
-    public PitId(UUID gameId, int pitIndex) {
-        this.gameId = gameId;
+    public PitId(Game game, int pitIndex) {
+        this.game = game;
         this.pitIndex = pitIndex;
     }
 }

@@ -3,27 +3,25 @@ package com.mpolder.mancala.model;
 import com.mpolder.mancala.model.idclass.PitId;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class Board {
-    private UUID gameId;
+    private Game game;
     private Pit[] pits;
 
     public Board() {
     }
 
-    public Board(UUID gameId, Pit[] pits) {
-        this.gameId = gameId;
+    public Board(Game game, Pit[] pits) {
+        this.game = game;
         this.pits = pits;
     }
 
-    public static Board build(UUID gameId) {
+    public static Board build(Game game) {
         Pit[] pits = new Pit[14];
         for (int i = 0; i < pits.length; i++) {
             int marbles = (i + 1) % 7 == 0 ? 0 : 6;
-            pits[i] = new Pit(new PitId(gameId, i), marbles);
+            pits[i] = new Pit(game, i, marbles);
         }
-        return new Board(gameId, pits);
+        return new Board(game, pits);
     }
 }

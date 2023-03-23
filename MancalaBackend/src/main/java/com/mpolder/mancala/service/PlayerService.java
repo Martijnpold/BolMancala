@@ -1,6 +1,7 @@
 package com.mpolder.mancala.service;
 
 import com.mpolder.mancala.model.Game;
+import com.mpolder.mancala.model.Invite;
 import com.mpolder.mancala.model.Player;
 import com.mpolder.mancala.model.Side;
 import com.mpolder.mancala.repository.PlayerRepository;
@@ -16,10 +17,10 @@ public class PlayerService implements IPlayerService {
     private PlayerRepository playerRepository;
 
     @Override
-    public void initPlayers(Game game) {
+    public void initPlayers(Game game, Invite invite) {
         playerRepository.saveAll(Arrays.asList(
-                new Player(game, Side.TOP, ""),
-                new Player(game, Side.BOTTOM, "")
+                new Player(game, Side.TOP, invite.getInviter()),
+                new Player(game, Side.BOTTOM, invite.getInvitee())
         ));
     }
 
