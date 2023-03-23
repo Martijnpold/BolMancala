@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -6,28 +6,16 @@ import { Observable } from 'rxjs';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
-  isMobile = false
-  maxMobileWidth = 500
+export class ToolbarComponent {
 
   navButtons = [
-    { label: 'About Me', route: '/about' },
-    { label: 'Projects', route: '/projects' },
+    { label: 'Games', route: '/games' },
+    { label: 'Invites', route: '/invites' },
   ]
 
   user$ = new Observable()
 
   logout() {
 
-  }
-
-  ngOnInit(): void {
-    this.resize()
-  }
-
-  @HostListener('window:resize')
-  public resize() {
-    const width = window.screen.width
-    this.isMobile = width <= this.maxMobileWidth
   }
 }

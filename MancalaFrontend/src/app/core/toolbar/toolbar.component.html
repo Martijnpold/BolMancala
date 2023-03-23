@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <button mat-flat-button color="primary" [routerLink]="'/'">
-        <mat-icon fontSet="fa" fontIcon="fa-hands-asl-interpreting"></mat-icon>
-        Tinus IT
+        <mat-icon fontSet="fa" fontIcon="fa-gamepad"></mat-icon>
+        Mancala
     </button>
 
     <button *ngFor="let button of navButtons" mat-flat-button color="primary" [routerLink]="button.route">
@@ -24,9 +24,6 @@
             Register
         </button>
     </ng-template>
-
-    <mat-toolbar-row *ngIf="isMobile" style="height: 0" color="secondary">
-    </mat-toolbar-row>
 </mat-toolbar>
 
 <!-- <mat-drawer-container class="example-container" autosize>
