@@ -23,6 +23,7 @@ public class SecurityConfig {
                             ).permitAll()
                             .anyRequest().authenticated();
                 })
+                .csrf().disable()
                 .oauth2Login()
                 .userInfoEndpoint().oidcUserService(oidcUserService);
         return http.build();
