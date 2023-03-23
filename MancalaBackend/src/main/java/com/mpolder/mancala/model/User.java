@@ -9,11 +9,13 @@ import lombok.Data;
 public class User {
     @Id
     private String email;
+    private String name;
 
     public User() {
     }
 
-    public User(String email) {
+    public User(String email, String name) {
         this.email = email;
+        this.name = name;
     }
 }

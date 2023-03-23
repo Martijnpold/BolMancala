@@ -1,9 +1,6 @@
 package com.mpolder.mancala.service;
 
-import com.mpolder.mancala.model.Board;
-import com.mpolder.mancala.model.Game;
-import com.mpolder.mancala.model.Pit;
-import com.mpolder.mancala.model.Player;
+import com.mpolder.mancala.model.*;
 import com.mpolder.mancala.model.idclass.PitId;
 import com.mpolder.mancala.model.idclass.PlayerId;
 import com.mpolder.mancala.repository.GameRepository;
@@ -62,7 +59,7 @@ public class GameServiceTest {
     @Test
     public void assertInvalidMoveShouldNotExecute() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn().opponent()));
+        Player player = new Player(game, game.getTurn().opponent(), "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[1];
 
@@ -77,7 +74,7 @@ public class GameServiceTest {
     @Test
     public void assertValidMoveShouldExecute() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[1];
         int endIndex = pit.getId().getPitIndex() + pit.getMarbles();
@@ -96,7 +93,7 @@ public class GameServiceTest {
     @Test
     public void assertValidMoveToEmptyShouldCollectOpposites() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[1];
         int endIndex = pit.getId().getPitIndex() + pit.getMarbles();
@@ -116,7 +113,7 @@ public class GameServiceTest {
     @Test
     public void assertMoveToScorePitShouldNotEndTurn() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[1];
         int endIndex = pit.getId().getPitIndex() + pit.getMarbles();
@@ -136,7 +133,7 @@ public class GameServiceTest {
     @Test
     public void assertMoveToNonScorePitShouldEndTurn() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[1];
         int endIndex = pit.getId().getPitIndex() + pit.getMarbles();
@@ -156,7 +153,7 @@ public class GameServiceTest {
     @Test
     public void assertNormalMoveShouldBeValid() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Pit pit = new Pit(new PitId(game.getId(), 1), 1);
 
         when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn());
@@ -168,7 +165,7 @@ public class GameServiceTest {
     @Test
     public void assertNonTurnPlayerMoveShouldNotBeValid() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn().opponent()));
+        Player player = new Player(game, game.getTurn().opponent(), "testmail");
         Pit pit = new Pit(new PitId(game.getId(), 1), 1);
 
         when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn());
@@ -180,7 +177,7 @@ public class GameServiceTest {
     @Test
     public void assertOppositeSideMoveShouldBeNotValid() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Pit pit = new Pit(new PitId(game.getId(), 10), 1);
 
         when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn().opponent());
@@ -192,7 +189,7 @@ public class GameServiceTest {
     @Test
     public void assertScorePitMoveShouldNotBeValid() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Pit pit = new Pit(new PitId(game.getId(), 0), 1);
 
         when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn());
@@ -204,7 +201,7 @@ public class GameServiceTest {
     @Test
     public void assertNoMarbleMoveShouldNotBeValid() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), game.getTurn()));
+        Player player = new Player(game, game.getTurn(), "testmail");
         Pit pit = new Pit(new PitId(game.getId(), 1), 0);
 
         when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn());

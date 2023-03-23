@@ -25,7 +25,7 @@ public class BoardServiceTest {
     @Test
     public void assertExecuteMoveMovesMarbles() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), Side.TOP));
+        Player player = new Player(game, Side.TOP, "testmail");
         Board board = Board.build(game.getId());
         Arrays.stream(board.getPits()).forEach(Pit::clearMarbles);
 
@@ -61,7 +61,7 @@ public class BoardServiceTest {
     @Test
     public void assertExecuteMoveSkipsOpponent() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), Side.BOTTOM));
+        Player player = new Player(game, Side.BOTTOM, "testmail");
         Board board = Board.build(game.getId());
         Arrays.stream(board.getPits()).forEach(Pit::clearMarbles);
 
@@ -97,7 +97,7 @@ public class BoardServiceTest {
     @Test
     public void assertCollectOppositesMovesMarbles() {
         Game game = new Game();
-        Player player = new Player(new PlayerId(game.getId(), Side.TOP));
+        Player player = new Player(game, Side.TOP, "testmail");
         Board board = Board.build(game.getId());
         Pit pit = board.getPits()[2];
         Pit opposite = board.getPits()[10];
