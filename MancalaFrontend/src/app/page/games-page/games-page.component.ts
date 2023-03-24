@@ -15,7 +15,7 @@ export class GamesPageComponent {
   });
 
   constructor(private selfGameService: SelfGameService, private router: Router) {
-    //this.games$ = selfGameService.getGames()
+    this.games$ = selfGameService.getGames()
   }
 
   navigateTo(game: Game) {

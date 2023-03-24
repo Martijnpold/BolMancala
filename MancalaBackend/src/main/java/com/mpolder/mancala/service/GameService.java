@@ -42,6 +42,7 @@ public class GameService implements IGameService {
     @Override
     public Game initGame(Invite invite) {
         Game game = new Game();
+        game.setName(invite.getInviter().getName() + " vs " + invite.getInvitee().getName());
         gameRepository.save(game);
         boardService.initBoard(game);
         playerService.initPlayers(game, invite);

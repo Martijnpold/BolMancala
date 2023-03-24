@@ -8,12 +8,10 @@ import { Game } from '../model/game';
 })
 export class SelfGameService {
 
-  baseUrl = 'http://localhost:8080/api'
-
   constructor(private _http: HttpClient) { }
 
-  getGames() {
-    return this._http.get<Game[]>(`${this.baseUrl}/games`)
+  getGames(): Observable<Game[]> {
+    return this._http.get<Game[]>(`api/games`)
     // .pipe(map((games: object[]) => {
     //   return games.map(game => {
     //     return Game.fromDoc(game);
@@ -21,4 +19,3 @@ export class SelfGameService {
     // }));
   }
 }
-
