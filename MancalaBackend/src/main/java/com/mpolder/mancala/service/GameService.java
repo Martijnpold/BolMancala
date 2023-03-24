@@ -35,6 +35,11 @@ public class GameService implements IGameService {
     }
 
     @Override
+    public Game getGame(User user, UUID id) {
+        return gameRepository.findByUserAndId(user.getEmail(), id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+    }
+
+    @Override
     public Game initGame(Invite invite) {
         Game game = new Game();
         gameRepository.save(game);

@@ -12,6 +12,8 @@ public interface IGameService {
 
     Game getGame(UUID id);
 
+    Game getGame(User user, UUID id);
+
     Game initGame(Invite invite);
 
     void tryDoTurn(Game game, Player player, Board board, Pit pit);

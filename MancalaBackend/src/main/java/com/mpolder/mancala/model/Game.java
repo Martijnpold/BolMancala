@@ -3,11 +3,8 @@ package com.mpolder.mancala.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -19,10 +16,6 @@ public class Game {
     private Side turn = Side.TOP;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Side winner = null;
-
-    @OneToMany()
-    @JoinColumn(name="gameId")
-    private Set<Player> players;
 
     public Game() {
     }

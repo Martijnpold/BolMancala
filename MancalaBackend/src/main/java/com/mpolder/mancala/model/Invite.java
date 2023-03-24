@@ -1,26 +1,30 @@
 package com.mpolder.mancala.model;
 
 
-import com.mpolder.mancala.model.idclass.InviteId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = "uniqueInviteCombination", columnNames = {"inviter", "invitee"})})
 public class Invite {
-    @EmbeddedId
-    private InviteId id;
+    @Id
+    private UUID id = UUID.randomUUID();
+    @ManyToOne
+    @JoinColumn(name = "inviter")
+    private User inviter;
+    @ManyToOne
+    @JoinColumn(name = "invitee")
+    private User invitee;
 
-    public Invite(User inviter, User invitee) {
-        this.id = new InviteId(inviter, invitee);
+    public Invite() {
     }
 
-    public User getInviter() {
-        return id.getInviter();
-    }
-
-    public User getInvitee() {
-        return id.getInvitee();
+    public Invite(UUID uuid, User inviter, User invitee) {
+        this.id = uuid;
+        this.inviter = inviter;
+        this.invitee = invitee;
     }
 }

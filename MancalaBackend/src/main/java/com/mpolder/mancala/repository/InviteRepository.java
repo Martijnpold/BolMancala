@@ -1,13 +1,16 @@
 package com.mpolder.mancala.repository;
 
 import com.mpolder.mancala.model.Invite;
-import com.mpolder.mancala.model.idclass.InviteId;
+import com.mpolder.mancala.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface InviteRepository extends JpaRepository<Invite, InviteId> {
-    List<Invite> findAllByIdInviter(String id);
+@Repository
+public interface InviteRepository extends JpaRepository<Invite, UUID> {
+    List<Invite> findAllByInviter(User user);
 
-    List<Invite> findAllByIdInvitee(String id);
+    List<Invite> findAllByInvitee(User user);
 }

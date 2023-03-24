@@ -11,6 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -46,7 +47,7 @@ public class GameServiceTest {
 
     @Test
     public void assertInitGameSave() {
-        Invite invite = new Invite(new User("test", "test"), new User("test", "test"));
+        Invite invite = new Invite(UUID.randomUUID(), new User("test", "test"), new User("test", "test"));
         Game created = gameService.initGame(invite);
 
         verify(mockGameRepository, times(1)).save(created);
