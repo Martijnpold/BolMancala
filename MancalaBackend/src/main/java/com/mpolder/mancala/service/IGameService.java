@@ -16,7 +16,7 @@ public interface IGameService {
 
     Game initGame(Invite invite);
 
-    void tryDoTurn(Game game, Player player, Board board, Pit pit);
+    boolean tryDoTurn(Game game, Player player, Board board, Pit pit);
 
     boolean isValidTurn(Game game, Player player, Pit pit);
 

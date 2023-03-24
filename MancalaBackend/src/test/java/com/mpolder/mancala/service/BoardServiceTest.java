@@ -19,7 +19,7 @@ public class BoardServiceTest {
     @Mock
     private PitRepository mockPitRepository;
     @InjectMocks
-    private BoardService boardService = new BoardService();
+    private BoardService boardService;
 
     @Test
     public void assertExecuteMoveMovesMarbles() {

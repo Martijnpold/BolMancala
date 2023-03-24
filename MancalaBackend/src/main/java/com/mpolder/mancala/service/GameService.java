@@ -49,7 +49,7 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void tryDoTurn(Game game, Player player, Board board, Pit pit) {
+    public boolean tryDoTurn(Game game, Player player, Board board, Pit pit) {
         if (isValidTurn(game, player, pit)) {
             Pit end = boardService.executeMove(player, board, pit);
             if (!boardService.isScorePit(pit) && end.getMarbles() == 1) {
@@ -59,7 +59,9 @@ public class GameService implements IGameService {
                 game.setTurn(player.getSide().opponent());
                 gameRepository.save(game);
             }
+            return true;
         }
+        return false;
     }
 
     @Override

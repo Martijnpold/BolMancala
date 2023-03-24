@@ -11,6 +11,8 @@ import com.mpolder.mancala.service.IGameService;
 import com.mpolder.mancala.service.IPlayerService;
 import com.mpolder.mancala.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -45,16 +47,16 @@ public class SelfGameController {
     }
 
     @PostMapping("/{id}/move")
-    public FullGameDTO inviteAccept(@AuthenticationPrincipal OAuth2User principal, @PathVariable UUID id, @RequestBody MoveDTO move) {
+    public ResponseEntity<FullGameDTO> inviteAccept(@AuthenticationPrincipal OAuth2User principal, @PathVariable UUID id, @RequestBody MoveDTO move) {
         User self = getUser(principal);
         Game game = getGame(self, id);
         List<Player> players = playerService.getPlayers(game);
         Board board = boardService.getBoard(game);
 
         Player mover = players.stream().filter(x -> x.getUser().equals(self)).findFirst().orElseThrow();
-        gameService.tryDoTurn(game, mover, board, board.getPits()[move.getPitIndex()]);
+        boolean success = gameService.tryDoTurn(game, mover, board, board.getPits()[move.getPitIndex()]);
 
-        return new FullGameDTO(game, board, players);
+        return new ResponseEntity<>(new FullGameDTO(game, board, players), success ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST);
     }
 
     private User getUser(OAuth2User principal) {

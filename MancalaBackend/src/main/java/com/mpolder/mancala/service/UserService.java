@@ -1,5 +1,6 @@
 package com.mpolder.mancala.service;
 
+import com.mpolder.mancala.exception.ResourceNotFoundException;
 import com.mpolder.mancala.model.User;
 import com.mpolder.mancala.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,6 @@ public class UserService implements IUserService {
 
     @Override
     public User getByEmail(String email) {
-        return userRepository.findById(email).orElseThrow(() -> new RuntimeException("email not found :("));
+        return userRepository.findById(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
