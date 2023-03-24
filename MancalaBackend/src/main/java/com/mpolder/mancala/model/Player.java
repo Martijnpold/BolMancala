@@ -26,6 +26,7 @@ public class Player {
         this.user = user;
     }
 
+    @JsonIgnore
     public Game getGame() {
         return id.getGame();
     }

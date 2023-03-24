@@ -48,7 +48,7 @@ public class SelfInviteController {
     public Game inviteAccept(@AuthenticationPrincipal OAuth2User principal, @PathVariable UUID id) {
         User self = getUser(principal);
         Invite invite = getInvite(self, id);
-        return gameService.initGame(invite);
+        return inviteService.acceptInvite(invite);
     }
 
     @PostMapping("/{id}/reject")

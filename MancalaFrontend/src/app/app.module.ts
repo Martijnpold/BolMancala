@@ -8,12 +8,17 @@ import { ToolbarComponent } from './core/toolbar/toolbar.component';
 import { GamesPageComponent } from './page/games-page/games-page.component';
 import { AppMaterialModule } from './app-material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { InvitesPageComponent } from './page/invites-page/invites-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { GamePageComponent } from './page/game-page/game-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     GamesPageComponent,
+    GamePageComponent,
+    InvitesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
     AppMaterialModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent]
 })

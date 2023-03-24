@@ -26,7 +26,7 @@ public class GameService implements IGameService {
 
     @Override
     public List<Game> getGames(User user) {
-        return gameRepository.findAllPlayerGames(user.getEmail());
+        return gameRepository.findAllPlayerGames(user);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class GameService implements IGameService {
 
     @Override
     public Game getGame(User user, UUID id) {
-        return gameRepository.findByUserAndId(user.getEmail(), id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+        return gameRepository.findByUserAndId(user, id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
     }
 
     @Override

@@ -41,7 +41,7 @@ public class GameServiceTest {
     public void assertGetUserGamesAccessesGameRepository() {
         User user = new User("test", "test");
         List<Game> created = Arrays.asList(new Game(), new Game());
-        when(mockGameRepository.findAllPlayerGames(user.getEmail())).thenReturn(created);
+        when(mockGameRepository.findAllPlayerGames(user)).thenReturn(created);
 
         List<Game> found = gameService.getGames(user);
         assertEquals(created, found);
@@ -66,7 +66,7 @@ public class GameServiceTest {
     public void assertGetInvalidUserGameAccessesGameRepository() {
         User user = new User("test", "test");
         Game created = new Game();
-        when(mockGameRepository.findByUserAndId(user.getEmail(), created.getId())).thenReturn(Optional.of(created));
+        when(mockGameRepository.findByUserAndId(user, created.getId())).thenReturn(Optional.of(created));
 
         Game found = gameService.getGame(user, created.getId());
         assertEquals(created, found);

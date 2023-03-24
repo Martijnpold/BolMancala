@@ -3,8 +3,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   exports: [
@@ -12,8 +13,9 @@ import { MatTableModule } from '@angular/material/table';
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule,
-    MatTableModule,
+    MatInputModule,
+    MatDividerModule,
+    MatFormFieldModule,
   ]
 })
 export class AppMaterialModule { }

@@ -1,5 +1,6 @@
 package com.mpolder.mancala.model.idclass;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mpolder.mancala.model.Game;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -10,6 +11,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class PitId {
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;

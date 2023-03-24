@@ -4,7 +4,12 @@
             <mat-card-title>
                 Game: {{ game.name }}
             </mat-card-title>
-            <mat-card-subtitle>{{game.id}}</mat-card-subtitle>
+            <mat-card-subtitle>
+                {{game.id}}<br>
+                <button class="small-spacer" mat-raised-button color="primary" [routerLink]="'/games/'+ game.id">
+                    Open
+                </button>
+            </mat-card-subtitle>
         </mat-card-content>
     </mat-card>
 

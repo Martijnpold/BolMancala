@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 @Entity
 public class Pit {
-    @EmbeddedId
     @JsonIgnore
+    @EmbeddedId
     private PitId id;
     @Column(nullable = false)
     private int marbles;
@@ -24,6 +24,7 @@ public class Pit {
         this.marbles = marbles;
     }
 
+    @JsonIgnore
     public Game getGame() {
         return id.getGame();
     }

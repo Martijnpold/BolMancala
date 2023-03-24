@@ -1,0 +1,65 @@
+<h1>Pending Invites</h1>
+<div *ngIf="in$ | async as ins">
+    <mat-card class="small-spacer" *ngFor="let inv of ins">
+        <mat-card-content>
+            <mat-card-title>
+                Invited by: {{ inv.invitee.name }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{inv.invitee.email}}<br>
+                <button mat-raised-button color="primary" (click)="accept(inv)">Accept</button>
+                <button mat-raised-button color="primary" style="margin-left: 5px" (click)="reject(inv)">Reject</button>
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="small-spacer" *ngIf="ins.length == 0">
+        <mat-card-content>
+            <mat-card-title>You have no pending invites :)</mat-card-title>
+        </mat-card-content>
+    </mat-card>
+</div>
+<br>
+<mat-divider></mat-divider>
+<h1>Outgoing Invites</h1>
+<div *ngIf="out$ | async as outs">
+    <mat-card class="small-spacer" *ngFor="let inv of outs">
+        <mat-card-content>
+            <mat-card-title>
+                Invited: {{ inv.invitee.name }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{inv.invitee.email}}<br>
+                <button mat-raised-button color="basic" (click)="cancel(inv)">Cancel</button>
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="small-spacer" *ngIf="outs.length == 0">
+        <mat-card-content>
+            <mat-card-title>You have no outgoing invites :)</mat-card-title>
+        </mat-card-content>
+    </mat-card>
+</div>
+<br>
+<mat-divider></mat-divider>
+
+<br>
+<div class="small-spacer">
+    <h2>Send an invite:</h2>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com"
+            [value]="inputText">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="invite()">
+        Send Invite
+    </button>
+</div>
