@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './page/home-page/home-page.component';
+import { GamesPageComponent } from './page/games-page/games-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'games',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    component: HomePageComponent
+    path: 'games',
+    component: GamesPageComponent
   },
 ]
 

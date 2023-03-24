@@ -1,0 +1,21 @@
+<div *ngIf="games$ | async as games">
+    <mat-card class="small-spacer" *ngFor="let game of games" (click)="navigateTo(game)">
+        <mat-card-content>
+            <mat-card-title>
+                Game: {{ game.name }}
+            </mat-card-title>
+            <mat-card-subtitle>{{game.id}}</mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="small-spacer" *ngIf="games.length == 0">
+        <mat-card-content>
+            <mat-card-title>No projects here yet</mat-card-title>
+            <mat-card-subtitle>Click the button below to create one!</mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+    <button class="small-spacer" mat-raised-button color="primary" [routerLink]="'/invites'">
+        View Invites
+    </button>
+</div>
