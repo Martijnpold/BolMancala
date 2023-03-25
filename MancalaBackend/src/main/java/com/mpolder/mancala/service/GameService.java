@@ -54,7 +54,7 @@ public class GameService implements IGameService {
         if (isValidTurn(game, player, pit)) {
             Pit end = boardService.executeMove(player, board, pit);
             if (!boardService.isScorePit(pit) && end.getMarbles() == 1) {
-                boardService.collectOpposites(player, board, pit);
+                boardService.collectOpposites(player, board, end);
             }
             if (shouldEndTurn(end)) {
                 game.setTurn(player.getSide().opponent());

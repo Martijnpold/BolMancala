@@ -1,2 +1,3 @@
-<p>game-page works!</p>
-{{game$ | async | json}}
+<div *ngIf="game != null" class="small-spacer">
+    <app-board [showButtons]="game.game.turn == side" [board]="game.board" [side]="side" (onMove)="doMove($event)"></app-board>
+</div>

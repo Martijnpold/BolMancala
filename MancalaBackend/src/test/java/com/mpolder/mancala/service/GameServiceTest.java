@@ -139,7 +139,7 @@ public class GameServiceTest {
 
         gameService.tryDoTurn(game, player, board, pit);
         verify(mockBoardService, times(1)).executeMove(player, board, pit);
-        verify(mockBoardService, times(1)).collectOpposites(player, board, pit);
+        verify(mockBoardService, times(1)).collectOpposites(player, board, endPit);
     }
 
     @Test

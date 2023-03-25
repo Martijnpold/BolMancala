@@ -1,0 +1,7 @@
+<mat-grid-list cols="8" rowHeight="100px">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
+        [style.background]="tile.color">
+        <app-pit [pit]="board.pits[tile.index]" [hasButton]="(tile.index + 1) % 7 != 0" [showButton]="tile.side == side"
+            [disabled]="!showButtons" (onMove)="click($event)"></app-pit>
+    </mat-grid-tile>
+</mat-grid-list>

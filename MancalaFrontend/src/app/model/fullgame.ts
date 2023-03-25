@@ -5,5 +5,6 @@ import { Player } from "./player";
 export class FullGame {
     game: Game;
     board: Board;
-    players: Player[]
+    self: Player;
+    players: Player[];
 }

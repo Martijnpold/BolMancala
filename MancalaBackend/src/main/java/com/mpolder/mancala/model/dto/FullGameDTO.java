@@ -11,14 +11,16 @@ import java.util.List;
 public class FullGameDTO {
     private Game game;
     private Board board;
+    private Player self;
     private List<Player> players;
 
     public FullGameDTO() {
     }
 
-    public FullGameDTO(Game game, Board board, List<Player> players) {
+    public FullGameDTO(Game game, Board board, Player self, List<Player> players) {
         this.game = game;
         this.board = board;
+        this.self = self;
         this.players = players;
     }
 

@@ -42,8 +42,9 @@ public class SelfGameController {
         User self = getUser(principal);
         Game game = getGame(self, id);
         List<Player> players = playerService.getPlayers(game);
+        Player selfPlayer = players.stream().filter(x -> x.getUser().equals(self)).findFirst().orElse(null);
         Board board = boardService.getBoard(game);
-        return new FullGameDTO(game, board, players);
+        return new FullGameDTO(game, board, selfPlayer, players);
     }
 
     @PostMapping("/{id}/move")
@@ -51,12 +52,13 @@ public class SelfGameController {
         User self = getUser(principal);
         Game game = getGame(self, id);
         List<Player> players = playerService.getPlayers(game);
+        Player selfPlayer = players.stream().filter(x -> x.getUser().equals(self)).findFirst().orElse(null);
         Board board = boardService.getBoard(game);
 
         Player mover = players.stream().filter(x -> x.getUser().equals(self)).findFirst().orElseThrow();
         boolean success = gameService.tryDoTurn(game, mover, board, board.getPits()[move.getPitIndex()]);
 
-        return new ResponseEntity<>(new FullGameDTO(game, board, players), success ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new FullGameDTO(game, board, selfPlayer, players), success ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST);
     }
 
     private User getUser(OAuth2User principal) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { FullGame } from 'src/app/model/fullgame';
+import { Pit } from 'src/app/model/pit';
 import { SelfGameService } from 'src/app/service/self.game.service';
 
 @Component({
@@ -10,14 +10,34 @@ import { SelfGameService } from 'src/app/service/self.game.service';
   styleUrls: ['./game-page.component.scss']
 })
 export class GamePageComponent implements OnInit {
-  game$: Observable<FullGame>;
+  game: FullGame;
+  side: string;
+  id: string;
 
   constructor(private route: ActivatedRoute, private selfGameService: SelfGameService) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.game$ = this.selfGameService.getGame(params['id']);
+      this.id = params['id'];
+      this.load();
     })
+  }
+
+  load() {
+    this.selfGameService.getGame(this.id).subscribe(game => {
+      this.game = game;
+      this.side = game.self.side;
+    });
+  }
+
+  doMove(index: number) {
+    this.selfGameService.doMove(this.id, index).subscribe(result => {
+      this.load();
+    })
+  }
+
+  pit(index: number): Pit {
+    return this.game.board.pits[index]
   }
 }

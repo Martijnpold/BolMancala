@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { InvitesPageComponent } from './page/invites-page/invites-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GamePageComponent } from './page/game-page/game-page.component';
+import { PitComponent } from './core/pit/pit.component';
+import { BoardComponent } from './core/board/board.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { GamePageComponent } from './page/game-page/game-page.component';
     GamesPageComponent,
     GamePageComponent,
     InvitesPageComponent,
+    PitComponent,
+    BoardComponent,
   ],
   imports: [
     BrowserModule,
