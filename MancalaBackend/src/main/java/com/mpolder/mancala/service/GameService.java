@@ -60,6 +60,13 @@ public class GameService implements IGameService {
                 game.setTurn(player.getSide().opponent());
                 gameRepository.save(game);
             }
+            if (boardService.shouldCollectSides(board)) {
+                boardService.collectSides(board);
+                Side winnerSide = boardService.getWinner(board);
+                game.setWinner(winnerSide);
+                game.setTurn(null);
+                gameRepository.save(game);
+            }
             return true;
         }
         return false;

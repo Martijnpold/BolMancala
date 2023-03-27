@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
 import { FullGame } from 'src/app/model/fullgame';
 import { Pit } from 'src/app/model/pit';
 import { SelfGameService } from 'src/app/service/self.game.service';
@@ -9,10 +10,12 @@ import { SelfGameService } from 'src/app/service/self.game.service';
   templateUrl: './game-page.component.html',
   styleUrls: ['./game-page.component.scss']
 })
-export class GamePageComponent implements OnInit {
+export class GamePageComponent implements OnInit, OnDestroy {
   game: FullGame;
   side: string;
   id: string;
+
+  autoRefresh: Subscription;
 
   constructor(private route: ActivatedRoute, private selfGameService: SelfGameService) {
   }
@@ -21,7 +24,15 @@ export class GamePageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.load();
+
+      this.autoRefresh = interval(500).subscribe(() => {
+        this.load();
+      })
     })
+  }
+
+  ngOnDestroy() {
+    this.autoRefresh.unsubscribe();
   }
 
   load() {

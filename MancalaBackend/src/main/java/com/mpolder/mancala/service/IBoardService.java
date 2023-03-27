@@ -21,6 +21,25 @@ public interface IBoardService {
     void collectOpposites(Player player, Board board, Pit pit);
 
     /**
+     * @param board Board to check
+     * @return whether one side of the game board has no marbles remaining and the pits should be tallied
+     */
+    boolean shouldCollectSides(Board board);
+
+    /**
+     * Collect all pit marbles into the side's score pit
+     *
+     * @param board Board to collect
+     */
+    void collectSides(Board board);
+
+    /**
+     * @param board Board to check
+     * @return Winning side of the board, null if the board is a draw
+     */
+    Side getWinner(Board board);
+
+    /**
      * Prepare a new board for an upcoming game
      *
      * @param game Game to set the board for

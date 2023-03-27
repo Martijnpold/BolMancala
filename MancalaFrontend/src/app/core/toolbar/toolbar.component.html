@@ -7,39 +7,4 @@
     <button *ngFor="let button of navButtons" mat-flat-button color="primary" [routerLink]="button.route">
         {{button.label}}
     </button>
-
-    <span class="fill-remaining-space"></span>
-
-    <div *ngIf="user$ | async; then logoutBlock else loginBlock"></div>
-    <ng-template #logoutBlock>
-        <button mat-flat-button color="primary" (click)="logout()">
-            Logout
-        </button>
-    </ng-template>
-    <ng-template #loginBlock>
-        <button mat-flat-button color="primary" [routerLink]="'/login'">
-            Login
-        </button>
-        <button mat-flat-button color="primary" [routerLink]="'/register'">
-            Register
-        </button>
-    </ng-template>
 </mat-toolbar>
-
-<!-- <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #compacttoolbar class="example-sidenav" mode="side">
-        <div *ngFor="let button of navButtons">
-            <button mat-flat-button color="primary" [routerLink]="button.route">
-                {{button.label}}
-            </button>
-            <br>
-        </div>
-    </mat-drawer>
-
-    <div class="example-sidenav-content">
-        <button type="button" mat-button (click)="compacttoolbar.toggle()">
-            Toggle sidenav
-        </button>
-    </div>
-
-</mat-drawer-container> -->

@@ -1,7 +1,6 @@
 package com.mpolder.mancala.service;
 
 import com.mpolder.mancala.model.*;
-import com.mpolder.mancala.model.idclass.PitId;
 import com.mpolder.mancala.repository.PitRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -112,6 +114,130 @@ public class BoardServiceTest {
         assertEquals(0, opposite.getMarbles());
         assertEquals(10, scorePit.getMarbles());
         verify(mockPitRepository, times(1)).saveAll(Arrays.asList(pit, opposite, scorePit));
+    }
+
+    @Test
+    public void assertShouldCollectSidesReturnsFalse() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 6, 0, 2, 1, 0,
+                0,
+                0, 0, 2, 0, 5, 0,
+                0,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertFalse(boardService.shouldCollectSides(board));
+    }
+
+    @Test
+    public void assertShouldCollectSidesReturnsTrueTopEmpty() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 0, 0, 0, 0, 0,
+                5,
+                0, 0, 2, 0, 5, 0,
+                0,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertTrue(boardService.shouldCollectSides(board));
+    }
+
+    @Test
+    public void assertShouldCollectSidesReturnsTrueBottomEmpty() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 6, 0, 2, 1, 0,
+                0,
+                0, 0, 0, 0, 0, 0,
+                2,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertTrue(boardService.shouldCollectSides(board));
+    }
+
+    @Test
+    public void assertCollectSidesSumsPits() {
+        Game game = new Game();
+        Player player = new Player(game, Side.BOTTOM, new User("test@gmail.com", "test"));
+        Board board = Board.build(game);
+        Arrays.stream(board.getPits()).forEach(Pit::clearMarbles);
+
+        int[] marbles = {
+                2, 1, 0, 5, 1, 0,
+                2,
+                0, 2, 0, 1, 0, 3,
+                6,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        boardService.collectSides(board);
+
+        int[] expected = {
+                0, 0, 0, 0, 0, 0,
+                11,
+                0, 0, 0, 0, 0, 0,
+                12
+        };
+
+        assertArrayEquals(expected, Arrays.stream(board.getPits()).mapToInt(Pit::getMarbles).toArray());
+        verify(mockPitRepository, times(1)).saveAll(Arrays.asList(board.getPits()));
+    }
+
+    @Test
+    public void assertGetWinnerReturnsTop() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 0, 0, 0, 0, 0,
+                10,
+                0, 0, 0, 0, 0, 0,
+                8,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertEquals(Side.TOP, boardService.getWinner(board));
+    }
+
+    @Test
+    public void assertGetWinnerReturnsBottom() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 0, 0, 0, 0, 0,
+                4,
+                0, 0, 0, 0, 0, 0,
+                12,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertEquals(Side.BOTTOM, boardService.getWinner(board));
+    }
+
+    @Test
+    public void assertGetWinnerReturnsDraw() {
+        Game game = new Game();
+        Board board = Board.build(game);
+
+        int[] marbles = {
+                0, 0, 0, 0, 0, 0,
+                9,
+                0, 0, 0, 0, 0, 0,
+                9,
+        };
+        for (int i = 0; i < marbles.length; i++) board.getPits()[i].setMarbles(marbles[i]);
+
+        assertNull(boardService.getWinner(board));
     }
 
     @Test

@@ -16,6 +16,11 @@ public interface IGameService {
 
     Game initGame(Invite invite);
 
+    /**
+     * Execute a move within a given game
+     *
+     * @return Whether the move was successful
+     */
     boolean tryDoTurn(Game game, Player player, Board board, Pit pit);
 
     boolean isValidTurn(Game game, Player player, Pit pit);
@@ -23,7 +28,7 @@ public interface IGameService {
     /**
      * Returns whether a turn should be ended after playing the last marble
      *
-     * @param pit    Pit the last marble landed in
+     * @param pit Pit the last marble landed in
      */
     boolean shouldEndTurn(Pit pit);
 }

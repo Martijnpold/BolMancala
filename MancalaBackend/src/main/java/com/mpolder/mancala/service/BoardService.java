@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService implements IBoardService {
@@ -50,6 +51,35 @@ public class BoardService implements IBoardService {
         pit.clearMarbles();
         oppositePit.clearMarbles();
         pitRepository.saveAll(Arrays.asList(pit, oppositePit, scorePit));
+    }
+
+    @Override
+    public boolean shouldCollectSides(Board board) {
+        return Arrays.stream(board.getPits()).collect(Collectors.groupingBy(this::getPitSide))
+                .values().stream()
+                .anyMatch(sidePits -> sidePits.stream().allMatch(pit -> pit.getMarbles() <= 0 || isScorePit(pit)));
+    }
+
+    @Override
+    public void collectSides(Board board) {
+        for (Pit p : board.getPits()) {
+            if (p.getMarbles() <= 0) continue;
+            Side side = getPitSide(p);
+            Pit scorePit = getScorePit(board, side);
+            if (!p.equals(scorePit)) {
+                scorePit.addMarbles(p.getMarbles());
+                p.clearMarbles();
+            }
+        }
+        pitRepository.saveAll(Arrays.asList(board.getPits()));
+    }
+
+    @Override
+    public Side getWinner(Board board) {
+        int highest = Arrays.stream(Side.values()).mapToInt(side -> getScorePit(board, side).getMarbles()).max().orElse(0);
+        List<Side> winners = Arrays.stream(Side.values()).filter(side -> getScorePit(board, side).getMarbles() == highest).toList();
+        if (winners.size() != 1) return null;
+        return winners.get(0);
     }
 
     @Override

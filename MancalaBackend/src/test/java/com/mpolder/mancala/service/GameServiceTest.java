@@ -120,6 +120,7 @@ public class GameServiceTest {
         gameService.tryDoTurn(game, player, board, pit);
         verify(mockBoardService, times(1)).executeMove(player, board, pit);
         verify(mockBoardService, times(0)).collectOpposites(player, board, pit);
+        verify(mockBoardService, times(0)).collectSides(board);
     }
 
     @Test
@@ -180,6 +181,30 @@ public class GameServiceTest {
         verify(mockBoardService, times(1)).executeMove(player, board, pit);
         verify(mockBoardService, times(0)).collectOpposites(player, board, pit);
         assertEquals(player.getSide().opponent(), game.getTurn());
+    }
+
+    @Test
+    public void assertEndingMoveShouldEndGame() {
+        Game game = new Game();
+        Player player = new Player(game, game.getTurn(), new User("test", "test"));
+        Board board = Board.build(game);
+        Pit pit = board.getPits()[1];
+        int endIndex = pit.getId().getPitIndex() + pit.getMarbles();
+        Pit endPit = board.getPits()[endIndex];
+
+        when(mockBoardService.getPitSide(pit)).thenReturn(game.getTurn());
+        when(mockBoardService.isScorePit(pit)).thenReturn(false);
+        when(mockBoardService.executeMove(player, board, pit)).thenReturn(endPit);
+        when(mockBoardService.shouldCollectSides(board)).thenReturn(true);
+        when(mockBoardService.getWinner(board)).thenReturn(Side.BOTTOM);
+        assertTrue(gameService.isValidTurn(game, player, pit));
+
+        gameService.tryDoTurn(game, player, board, pit);
+
+        verify(mockBoardService, times(1)).collectSides(board);
+        verify(mockGameRepository, atLeastOnce()).save(game);
+        assertEquals(Side.BOTTOM, game.getWinner());
+        assertNull(game.getTurn());
     }
 
     @Test
