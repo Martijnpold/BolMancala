@@ -1,23 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockInstance, MockBuilder, MockRender } from 'ng-mocks';
+import { AppModule } from 'src/app/app.module';
 
 import { ToolbarComponent } from './toolbar.component';
 
 describe('ToolbarComponent', () => {
-  let component: ToolbarComponent;
-  let fixture: ComponentFixture<ToolbarComponent>;
+  MockInstance.scope();
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(ToolbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    return MockBuilder(ToolbarComponent, AppModule)
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(ToolbarComponent);
+
+    expect(fixture.point.componentInstance).toEqual(
+      jasmine.any(ToolbarComponent),
+    );
   });
 });

@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MockInstance, MockBuilder, MockRender } from 'ng-mocks';
+import { AppModule } from 'src/app/app.module';
 import { InvitesPageComponent } from './invites-page.component';
 
 describe('InvitesPageComponent', () => {
-  let component: InvitesPageComponent;
-  let fixture: ComponentFixture<InvitesPageComponent>;
+  MockInstance.scope();
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ InvitesPageComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(InvitesPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    return MockBuilder(InvitesPageComponent, AppModule)
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(InvitesPageComponent);
+
+    expect(fixture.point.componentInstance).toEqual(
+      jasmine.any(InvitesPageComponent),
+    );
   });
 });

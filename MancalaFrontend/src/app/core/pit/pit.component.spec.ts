@@ -1,23 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MockInstance, MockBuilder, MockRender } from 'ng-mocks';
+import { AppModule } from 'src/app/app.module';
+import { Game } from 'src/app/model/game';
 import { PitComponent } from './pit.component';
 
 describe('PitComponent', () => {
-  let component: PitComponent;
-  let fixture: ComponentFixture<PitComponent>;
+  MockInstance.scope();
+
+  let fakeGame: Game = { id: "test-id", name: "test-game", turn: "TOP" }
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ PitComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(PitComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    return MockBuilder(PitComponent, AppModule)
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(PitComponent, {
+      pit: { game: fakeGame, index: 2, marbles: 5 }
+    });
+
+    expect(fixture.point.componentInstance).toEqual(
+      jasmine.any(PitComponent),
+    );
   });
 });

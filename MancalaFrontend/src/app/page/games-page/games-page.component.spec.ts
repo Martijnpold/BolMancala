@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MockInstance, MockBuilder, MockRender } from 'ng-mocks';
+import { AppModule } from 'src/app/app.module';
 import { GamesPageComponent } from './games-page.component';
 
-describe('GamesComponent', () => {
-  let component: GamesPageComponent;
-  let fixture: ComponentFixture<GamesPageComponent>;
+describe('GamesPageComponent', () => {
+  MockInstance.scope();
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ GamesPageComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(GamesPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    return MockBuilder(GamesPageComponent, AppModule)
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(GamesPageComponent);
+
+    expect(fixture.point.componentInstance).toEqual(
+      jasmine.any(GamesPageComponent),
+    );
   });
 });
