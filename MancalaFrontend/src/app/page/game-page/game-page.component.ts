@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { FullGame } from 'src/app/model/fullgame';
 import { Pit } from 'src/app/model/pit';
+import { Player } from 'src/app/model/player';
 import { SelfGameService } from 'src/app/service/self.game.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { SelfGameService } from 'src/app/service/self.game.service';
 })
 export class GamePageComponent implements OnInit, OnDestroy {
   game: FullGame;
+  winner?: Player;
   side: string;
   id: string;
 
@@ -39,6 +41,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.selfGameService.getGame(this.id).subscribe(game => {
       this.game = game;
       this.side = game.self.side;
+      if (game.game.winner != null) {
+        this.winner = game.players.find(player => player.side == game.game.winner)
+      }
     });
   }
 

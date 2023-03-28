@@ -1,3 +1,4 @@
 <div *ngIf="game != null" class="small-spacer">
+    <h1 *ngIf="winner != null">Winner: {{winner.user.name}} ({{winner.side}})</h1>
     <app-board [showButtons]="game.game.turn == side" [board]="game.board" [side]="side" (onMove)="doMove($event)"></app-board>
 </div>
