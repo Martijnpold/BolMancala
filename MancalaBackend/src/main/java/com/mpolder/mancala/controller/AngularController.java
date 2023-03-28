@@ -5,11 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class AngularController implements ErrorController {
-    private static final String PATH = "/error";
-
-    @RequestMapping(value = PATH)
-    public String error() {
+    @RequestMapping(value = {"games/**", "invites/**"})
+    public String serve() {
         return "forward:/index.html";
     }
 }
