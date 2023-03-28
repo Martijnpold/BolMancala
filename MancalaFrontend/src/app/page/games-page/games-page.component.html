@@ -2,7 +2,7 @@
     <mat-card class="small-spacer" *ngFor="let game of games" (click)="navigateTo(game)">
         <mat-card-content>
             <mat-card-title>
-                Game: {{ game.name }}
+                Game: {{ game.name }}<span *ngIf="game.winner != null"> (Ended)</span>
             </mat-card-title>
             <mat-card-subtitle>
                 {{game.id}}<br>
@@ -15,8 +15,8 @@
 
     <mat-card class="small-spacer" *ngIf="games.length == 0">
         <mat-card-content>
-            <mat-card-title>No projects here yet</mat-card-title>
-            <mat-card-subtitle>Click the button below to create one!</mat-card-subtitle>
+            <mat-card-title>No games yet</mat-card-title>
+            <mat-card-subtitle>Invite someone or accept an invite to play!</mat-card-subtitle>
         </mat-card-content>
     </mat-card>
 

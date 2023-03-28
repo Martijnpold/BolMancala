@@ -1,5 +1,6 @@
 package com.mpolder.mancala.service;
 
+import com.mpolder.mancala.exception.SelfInviteException;
 import com.mpolder.mancala.exception.ResourceNotFoundException;
 import com.mpolder.mancala.model.Game;
 import com.mpolder.mancala.model.Invite;
@@ -31,6 +32,7 @@ public class InviteService implements IInviteService {
 
     @Override
     public Invite createInvite(User inviter, User invitee) {
+        if (inviter.equals(invitee)) throw new SelfInviteException("User cannot invite themselves");
         return inviteRepository.save(new Invite(UUID.randomUUID(), inviter, invitee));
     }
 

@@ -1,6 +1,7 @@
 package com.mpolder.mancala.service;
 
 
+import com.mpolder.mancala.exception.SelfInviteException;
 import com.mpolder.mancala.exception.ResourceNotFoundException;
 import com.mpolder.mancala.model.Invite;
 import com.mpolder.mancala.model.User;
@@ -71,6 +72,12 @@ public class InviteServiceTest {
         assertEquals(expected, created);
         assertEquals(user1, created.getInviter());
         assertEquals(user2, created.getInvitee());
+    }
+
+    @Test
+    public void assertCreateInviteOnSelfThrowsException() {
+        User user1 = new User("t1", "t1");
+        assertThrows(SelfInviteException.class, () -> inviteService.createInvite(user1, user1));
     }
 
     @Test
