@@ -53,7 +53,7 @@ public class GameService implements IGameService {
     public boolean tryDoTurn(Game game, Player player, Board board, Pit pit) {
         if (isValidTurn(game, player, pit)) {
             Pit end = boardService.executeMove(player, board, pit);
-            if (!boardService.isScorePit(pit) && end.getMarbles() == 1) {
+            if (!boardService.isScorePit(end) && end.getMarbles() == 1) {
                 boardService.collectOpposites(player, board, end);
             }
             if (shouldEndTurn(end)) {
